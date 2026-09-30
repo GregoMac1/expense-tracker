@@ -2,6 +2,7 @@ import TelegramBot from 'node-telegram-bot-api';
 import { loadConfig } from '../config';
 import { logger } from '../logger';
 import { handleMessage } from './router';
+import { registerMenu } from './menu';
 
 interface PollingError extends Error {
   code?: string;
@@ -114,6 +115,8 @@ export function startBot(): TelegramBot {
       scheduleRestart();
     }
   }, HEALTH_CHECK_INTERVAL_MS);
+
+  void registerMenu(bot);
 
   logger.info('Bot started, polling for messages');
   return bot;
